@@ -2,14 +2,14 @@ import os
 import sys
 import threading
 import socket
-import communication_handler
-from chat_handler import ChatHandler
-from user_handler import UserHandler
+from .chat_handler import ChatHandler
+from .user_handler import UserHandler
+from .communication_handler import start_communication
 
 increment_id = 0
 
 def listen_communication(conn, ch, uh, id):
-    communication_handler.start_communication(conn, ch, uh, id)
+    start_communication(conn, ch, uh, id)
     print(f"Client {id} was disconnected!")
     conn.close()
 
@@ -18,7 +18,7 @@ def start():
     c_handler = ChatHandler()
     u_handler = UserHandler()
 
-    SOCK_ADDR = "../temp/uds_socket"
+    SOCK_ADDR = "temp/uds_socket"
 
     try:
         os.unlink(SOCK_ADDR)
@@ -44,6 +44,3 @@ def start():
         sock.shutdown(socket.SHUT_RDWR)
         sock.close()
         sys.exit(0)
-
-if __name__ == "__main__":
-    start()

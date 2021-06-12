@@ -1,15 +1,18 @@
 import socket
 import sys
+from messages import format
+
+encoding = "UTF-8"
 
 def send(sock, msg: str):
-    message = msg.encode(encoding)
-    msg_length = len(message)
-    send_length = str(msg_length).encode(encoding)
-    send_length += b" " * (64 - len(send_length))
-    sock.send(send_length)
-    sock.send(message)
+    messages = format.craete_message(msg, encoding)
+    sock.send(messages[0])
+    sock.send(messages[1])
 
-def start(sock):
+def start():
+    sock = socket.socket(family=socket.AF_UNIX, type=socket.SOCK_STREAM)
+    SOCK_ADDR = "temp/uds_socket"
+    EXIT_MESSAGE = "!EXIT"
     try:
         sock.connect(SOCK_ADDR)
     except socket.error:
@@ -26,12 +29,3 @@ def start(sock):
         send(sock, EXIT_MESSAGE)
         sock.shutdown(socket.SHUT_RDWR)
         sock.close()
-
-
-if __name__ == "__main__":
-    sock = socket.socket(family=socket.AF_UNIX, type=socket.SOCK_STREAM)
-    SOCK_ADDR = "../temp/uds_socket"
-    EXIT_MESSAGE = "!EXIT"
-    encoding = "UTF-8"
-    start(sock)
-

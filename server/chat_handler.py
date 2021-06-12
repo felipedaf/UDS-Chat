@@ -1,4 +1,4 @@
-from chat import Chat
+from .chat import Chat
 
 class ChatHandler:
     def __init__(self):

@@ -1,4 +1,4 @@
-from user import User
+from .user import User
 class UserHandler:
     def __init__(self):
         self.users = dict()

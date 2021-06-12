@@ -1,5 +1,5 @@
 import json
-import message
+from . import message
 import re
 EXIT_MESSAGE = "!EXIT"
 FORMAT = "UTF-8"

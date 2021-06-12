@@ -1,4 +1,4 @@
-from message import Message
+from .message import Message
 class Chat:
     def __init__(self, addr_user1, addr_user2):
         self.user1 = addr_user1
